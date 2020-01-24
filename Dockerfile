@@ -30,11 +30,11 @@ RUN apt-get update && \
     rm -r /var/lib/apt/lists/*
 
 # Android SDK
-ARG ANDROID_SDK_URL="https:\/\/dl.google.com\/android\/repository\/tools_r25.2.5-linux.zip"
+ARG ANDROID_SDK_URL="https://dl.google.com/android/repository/tools_r25.2.5-linux.zip"
 ARG ANDROID_SYSTEM_PACKAGE="android-25"
 ARG ANDROID_BUILD_TOOLS_PACKAGE="build-tools-25.0.2"
 ARG ANDROID_PACKAGES="platform-tools,$ANDROID_SYSTEM_PACKAGE,$ANDROID_BUILD_TOOLS_PACKAGE,extra-android-m2repository,extra-google-m2repository"
-ADD $ANDROID_SDK_URL /tmp/android-sdk.zip
+RUN curl $ANDROID_SDK_URL -o /tmp/android-sdk.zip
 RUN mkdir /opt/android-sdk /app /dist && \
     chown nativescript:nativescript /tmp/android-sdk.zip /opt/android-sdk /app /dist
 USER nativescript
