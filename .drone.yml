@@ -10,8 +10,10 @@ steps:
       dockerfile: ./Dockerfile
       registry: docker.pkg.github.com
       repo: lperdereau/nativescript-docker/builder
-      json_key:
-        from_secret: config_json
+      username:
+        from_secret: github_username
+      password:
+        from_secret: github_token
       tags:
         - ${DRONE_COMMIT_SHA:0:8}
         - latest
