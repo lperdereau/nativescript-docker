@@ -30,16 +30,32 @@ RUN apt-get update && \
     rm -r /var/lib/apt/lists/*
 
 # Android SDK
-ARG ANDROID_SDK_URL="https://dl.google.com/android/repository/tools_r25.2.5-linux.zip"
-ARG ANDROID_SYSTEM_PACKAGE="android-25"
-ARG ANDROID_BUILD_TOOLS_PACKAGE="build-tools-25.0.2"
-ARG ANDROID_PACKAGES="platform-tools,$ANDROID_SYSTEM_PACKAGE,$ANDROID_BUILD_TOOLS_PACKAGE,extra-android-m2repository,extra-google-m2repository"
-RUN curl $ANDROID_SDK_URL -o /tmp/android-sdk.zip
+ENV VERSION_SDK_TOOLS=3952940 \
+	  ANDROID_HOME=/opt/android-sdk
+ENV	PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools
+RUN apt-get update && apt-get install unzip && \
+    mkdir -p $ANDROID_HOME && \
+    chown -R root.root $ANDROID_HOME && \
+    wget -q -O sdk.zip http://dl.google.com/android/repository/sdk-tools-linux-$VERSION_SDK_TOOLS.zip && \
+    unzip sdk.zip -d $ANDROID_HOME && \
+    rm -f sdk.zip
+RUN echo $ANDROID_HOME
+RUN mkdir -p /root/.android && \
+    touch /root/.android/repositories.cfg
+    
+RUN yes | sdkmanager --licenses && sdkmanager --update
+
+RUN yes | sdkmanager \
+  "tools" \
+  "platform-tools" \
+  "build-tools;28.0.3" \
+  "extras;android;m2repository" \
+  "platforms;android-28" \
+  "extras;google;m2repository"
+
 RUN mkdir /opt/android-sdk /app /dist && \
     chown nativescript:nativescript /tmp/android-sdk.zip /opt/android-sdk /app /dist
 USER nativescript
-ENV ANDROID_HOME /opt/android-sdk
-ENV PATH $PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 RUN tns error-reporting disable && \
     unzip -q /tmp/android-sdk.zip -d /opt/android-sdk && \
     rm /tmp/android-sdk.zip && \
