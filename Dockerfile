@@ -11,7 +11,7 @@ RUN apt-get update && \
 
 # JAVA
 RUN apt-get update && \
-    apt-get -y install default-jdk --no-install-recommends && \
+    apt-get -y install openjdk-8-jdk --no-install-recommends && \
     rm -r /var/lib/apt/lists/*
 
 # NodeJS
