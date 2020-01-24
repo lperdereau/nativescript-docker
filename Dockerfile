@@ -53,9 +53,7 @@ RUN yes | sdkmanager \
   "platforms;android-28" \
   "extras;google;m2repository"
 
-RUN mkdir /app /dist && \
-    chown nativescript:nativescript /opt/android-sdk /app /dist
-USER nativescript
+RUN mkdir /app /dist
 RUN tns error-reporting disable
 # Self-update of 'tools' package is currently not working?
 #RUN echo "y" | /opt/android-sdk/tools/android --silent update sdk -a -u -t tools
