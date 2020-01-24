@@ -36,7 +36,7 @@ ENV	PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platfor
 RUN apt-get update && apt-get install unzip && \
     mkdir -p $ANDROID_HOME && \
     chown -R root.root $ANDROID_HOME && \
-    wget -q -O sdk.zip http://dl.google.com/android/repository/sdk-tools-linux-$VERSION_SDK_TOOLS.zip && \
+    curl http://dl.google.com/android/repository/sdk-tools-linux-$VERSION_SDK_TOOLS.zip -o sdk.zip && \
     unzip sdk.zip -d $ANDROID_HOME && \
     rm -f sdk.zip
 RUN echo $ANDROID_HOME
