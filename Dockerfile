@@ -53,7 +53,7 @@ RUN yes | sdkmanager \
   "platforms;android-28" \
   "extras;google;m2repository"
 
-RUN mkdir /opt/android-sdk /app /dist && \
+RUN mkdir /app /dist && \
     chown nativescript:nativescript /tmp/android-sdk.zip /opt/android-sdk /app /dist
 USER nativescript
 RUN tns error-reporting disable && \
