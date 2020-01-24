@@ -1,0 +1,21 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: docker
+    image: banzaicloud/drone-kaniko
+    settings:
+      email: louis@unyc.io
+      dockerfile: ./Dockerfile
+      registry: docker.pkg.github.com
+      repo: lperdereau/nativescript-docker/builder
+      json_key:
+        from_secret: config_json
+      tags:
+        - ${DRONE_COMMIT_SHA:0:8}
+        - latest
+
+trigger:
+  branch:
+  - master
