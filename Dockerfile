@@ -56,8 +56,7 @@ RUN yes | sdkmanager \
 RUN mkdir /app /dist && \
     chown nativescript:nativescript /opt/android-sdk /app /dist
 USER nativescript
-RUN tns error-reporting disable && \
-    echo "y" | /opt/android-sdk/tools/android --silent update sdk -a -u -t $ANDROID_PACKAGES
+RUN tns error-reporting disable
 # Self-update of 'tools' package is currently not working?
 #RUN echo "y" | /opt/android-sdk/tools/android --silent update sdk -a -u -t tools
 
